@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 public class Level extends JFrame {
 
-    private Map m = new Map();
+    private LevelReader m = new LevelReader();
 
     public Level() {
         createComponents();
@@ -42,7 +42,7 @@ public class Level extends JFrame {
         
         @Override
         public void keyReleased(KeyEvent e) {
-            Player p = m.getPlayer();
+            Speler p = m.getPlayer();
             int x = p.getX();
             int y = p.getY();
             System.out.print("old:("+x+","+y+") ");
