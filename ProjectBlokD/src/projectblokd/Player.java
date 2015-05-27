@@ -1,45 +1,31 @@
 package projectblokd;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
-public class Player extends Veld implements KeyListener {
+public class Player {
 
     public int x;
     public int y;
     
-    public Player (int xco, int yco){
+    
+    
+    public Player(int xco , int yco){
         x = xco;
         y = yco;
     }
     
-    @Override
-    public void keyTyped(KeyEvent e) {
-
+    public int getX(){
+        return x;
     }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
+    public int getY(){
+        return y;
     }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-                y -= 1;
-                break;
-            case KeyEvent.VK_RIGHT:
-                x += 1;
-                break;
-            case KeyEvent.VK_LEFT:
-                x -= 1;
-                break;
-            case KeyEvent.VK_DOWN:
-                y += 1;
-                break;
-        }
-
+    public int setX(int xco){
+        return x = xco;
+    }
+    public int setY(int yco){
+        return y = yco;
     }
 
 }
