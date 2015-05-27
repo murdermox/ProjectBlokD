@@ -17,7 +17,7 @@ public class Level extends JFrame {
 
         setSize(560, 560);
         setTitle("Maze Game");
-        //setBackground(Color.BLACK);
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         m.addKeyListener(new PlayerListener());
