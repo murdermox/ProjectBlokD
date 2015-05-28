@@ -9,7 +9,6 @@ public class Speler {
     public int y;
     
     
-    
     public Speler(int xco , int yco){
         x = xco;
         y = yco;
