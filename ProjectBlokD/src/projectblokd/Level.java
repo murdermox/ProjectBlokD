@@ -24,6 +24,7 @@ public class Level extends JFrame {
         m.setFocusable(true);
         add(m);
         setResizable(false);
+        setLocationRelativeTo(null);
         setVisible(true);
 
     }
