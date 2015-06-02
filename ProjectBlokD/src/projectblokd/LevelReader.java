@@ -2,60 +2,74 @@ package projectblokd;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 import javax.swing.*;
 
 public class LevelReader extends JPanel {
 
-    private Speler p = null;
+    Speler p;
 
-    private Object[][] object = new Object[][]{};
-    private String[][] maze = new String[][]{};
-    private ImageIcon image;
-    private JLabel label;
+    private String[][] maze = new String[][]{
+        {"w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w", "w"},
+        {"w", "b", "w", "w", "x", "x", "x", "x", "w", "w", "w", "p", "w"},
+        {"w", "x", "w", "w", "x", "w", "w", "x", "x", "x", "w", "x", "w"},
+        {"w", "x", "w", "w", "x", "h", "w", "w", "w", "x", "w", "x", "w"},
+        {"w", "x", "x", "x", "w", "w", "w", "x", "w", "x", "x", "x", "w"},
+        {"w", "x", "w", "x", "x", "x", "x", "x", "x", "x", "w", "x", "w"},
+        {"w", "x", "w", "w", "w", "w", "w", "w", "w", "x", "w", "x", "w"},
+        {"w", "x", "w", "w", "x", "x", "x", "x", "w", "x", "w", "x", "w"},
+        {"w", "x", "w", "w", "x", "w", "w", "x", "w", "x", "w", "x", "w"},
+        {"w", "x", "w", "c", "x", "w", "w", "x", "w", "x", "w", "x", "w"},
+        {"w", "x", "w", "w", "x", "w", "w", "x", "w", "x", "w", "x", "w"},
+        {"w", "x", "x", "x", "x", "x", "w", "x", "w", "x", "x", "x", "w"},
+        {"w", "w", "w", "w", "w", "w", "w", "v", "w", "w", "w", "w", "w"},};
+
+    private Item[][] mazeObjects;
 
     public LevelReader() {
-        JPanel p = new JPanel();
-        p.setLayout(new GridLayout(10, 10));
-        try {
-            Scanner in = new Scanner(new File("src/resources/txt/Level.txt").getAbsoluteFile());
+        mazeObjects = new Item[13][13];
 
-            for (int i = 0; i < 10; i++) {
-
-                char[] txt;
-                String s1 = in.next();
-                txt = s1.toCharArray();
-
-                for (int j = 0; j < 10; j++) {
-
-                    char c = txt[j];
-                    if (c == 'm') {
-                        image = new ImageIcon(getClass().getResource("brickwall.png"));
-                        label = new JLabel(image);
-                        p.add(label);
-                    }
-                    if (c == 's') {
-                        image = new ImageIcon("Mario.png");
-                        label = new JLabel(image);
-                        p.add(label);
-                    }
-                    if (c == 'v') {
-                        image = new ImageIcon("Grass.png");
-                        label = new JLabel(image);
-                        p.add(label);
-                    }
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 13; j++) {
+                if (maze[j][i].equals("w")) {
+                    Muur w = new Muur(j, i);
+                    mazeObjects[j][i] = w;
+                } else if (maze[j][i].equals("x")) {
+                    Pad p = new Pad(j, i);
+                    mazeObjects[j][i] = p;
+                } else if (maze[j][i].equals("h")) {
+                    Helper h = new Helper(j, i);
+                    mazeObjects[j][i] = h;
+                } else if (maze[j][i].equals("b")) {
+                    Bazooka b = new Bazooka(j, i);
+                    mazeObjects[j][i] = b;
+                } else if (maze[j][i].equals("p")) {
+                    p = new Speler(j, i);
+                    mazeObjects[j][i] = p;
+                } else if (maze[j][i].equals("c")) {
+                    Cheater c = new Cheater(j, i);
+                    mazeObjects[j][i] = c;
+                } else if (maze[j][i].equals("v")) {
+                    Vriend v = new Vriend(j, i);
+                    mazeObjects[j][i] = v;
                 }
-
             }
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
         }
+    }
+
+    public Item[][] getMazeObjects() {
+        return mazeObjects;
+    }
+
+    public Item getItem(int x, int y) {
+        return mazeObjects[x][y];
+    }
+
+    public void updateMaze(int x, int y, int oldX, int oldY) {
+        mazeObjects[x][y] = p;
+        mazeObjects[oldX][oldY] = new Pad(oldX, oldY);
     }
 
     public Speler getPlayer() {
         return p;
     }
-
 }

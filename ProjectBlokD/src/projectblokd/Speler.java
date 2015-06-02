@@ -1,31 +1,17 @@
 package projectblokd;
 
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Speler {
-
-    public int x;
-    public int y;
-    
-    
-    public Speler(int xco , int yco){
-        x = xco;
-        y = yco;
+public class Speler extends Item{
+   
+    public Speler(int x, int y){
+        super(x,y);
+        color = Color.PINK;
     }
     
-    public int getX(){
-        return x;
-    }
-    public int getY(){
-        return y;
-    }
-    public int setX(int xco){
-        return x = xco;
-    }
-    public int setY(int yco){
-        return y = yco;
-    }
+    
     public boolean checkItem(){
         
         return true;

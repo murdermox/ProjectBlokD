@@ -1,14 +1,22 @@
 package projectblokd;
 
-public class Bazooka {
-    
+import java.awt.Color;
+
+public class Bazooka extends Item {
+
     public int ammo;
-    
-    public void schiet(){
-        
+
+    public Bazooka(int xco, int yco) {
+        super(xco, yco);
+        color = Color.MAGENTA;
     }
-    public void destroyMuur(){
-        
+
+    public void schiet() {
+
     }
-    
+
+    public void destroyMuur() {
+
+    }
+
 }

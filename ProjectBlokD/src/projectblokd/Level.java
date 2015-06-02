@@ -2,31 +2,29 @@ package projectblokd;
 
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Level extends JFrame {
+public class Level extends JPanel {
 
     private LevelReader m = new LevelReader();
-
-    public Level() {
-        createComponents();
+    private JFrame main;
+    
+    public Level(JFrame main) {
+        this.main = main;
+        addKeyListener(new PlayerListener());
+        setFocusable(true);
     }
-
-    public void createComponents() {
-
-        setSize(560, 560);
-        setTitle("Maze Game");
-        
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        m.addKeyListener(new PlayerListener());
-        m.setFocusable(true);
-        add(m);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setVisible(true);
-
+    
+    public void paintComponent(Graphics g) {
+       Item[][] maze = m.getMazeObjects();
+        for (int i = 0; i < 13; i++) {
+            for (int j = 0; j < 13; j++) {
+               g.setColor(maze[j][i].getColor());
+               g.fillRect(maze[j][i].getX() * 40, maze[j][i].getY() * 40, 40, 40);
+            }
+        }
     }
 
     class PlayerListener implements KeyListener {
@@ -44,9 +42,10 @@ public class Level extends JFrame {
         @Override
         public void keyReleased(KeyEvent e) {
             Speler p = m.getPlayer();
-            int x = p.getX();
-            int y = p.getY();
-            System.out.print("old:("+x+","+y+") ");
+            int oldX = p.getX();
+            int oldY = p.getY();
+            int x = oldX;
+            int y = oldY;
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                     y -= 1;
@@ -61,12 +60,16 @@ public class Level extends JFrame {
                     y += 1;
                     break;
             }
-            p.setX(x);
-            p.setY(y);
-            System.out.println("new: ("+p.getX()+","+p.getY()+") ");
-            
-        }
-
-        
+            Item i = m.getItem(x, y);
+            System.out.println(i);
+            if (!(i instanceof Muur)) {
+                i.setX(oldX);
+                i.setY(oldY);
+                p.setX(x);
+                p.setY(y);
+                main.repaint();
+                m.updateMaze(x, y, oldX, oldY);
+            }
+        }       
     }
 }
